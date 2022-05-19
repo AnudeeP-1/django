@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Index</title>
+</head>
+<body>
+	<h1>Hello</h1>
+	<div class="row g-3">
+		<div class="col">
+			<form action="{% url 'add' %}" method="post" role="form">
+				{% csrf_token %}
+				<div class="mb-3">
+				  {{form.text}}
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			  </form>
+		</div>
+
+		<div class="container  gy-5">
+			<div class="row align-items-start  gy-5">
+			  <div class="col">
+				<a href="{% url 'deleteCompleted' %}"><button type="submit" class="btn btn-primary">Delete completed</button></a>
+			  </div>
+			  <div class="col">
+				<a href="{% url 'deleteAll' %}"><button type="submit" class="btn btn-primary">Delete all</button></a>
+			  </div>
+			</div>
+		</div>	
+
+		<div class="list-group gy-5">
+				{% for todo in todo_list %}
+					{% if todo.completed %}
+						<a href="#" class="list-group-item list-group-item-action text-decoration-line-through">{{todo.text}}</a>
+					{% else %}
+						<a href="{% url 'complete' todo.id %}" class="list-group-item list-group-item-action">{{todo.text}}</a>
+					{% endif %}
+				{% endfor %}
+		</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
